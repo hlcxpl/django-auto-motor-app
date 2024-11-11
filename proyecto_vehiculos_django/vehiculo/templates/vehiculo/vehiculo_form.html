@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}Agregar Vehículo{% endblock %}
+
+{% block content %}
+<h1 class="text-center">Agregar Vehículo</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-primary mt-3">Guardar</button>
+</form>
+<a href="{% url 'index' %}" class="btn btn-link mt-3">Volver a inicio</a>
+{% endblock %}
