@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}Registro de Usuario{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+
+    <!-- Modal -->
+    <div class="modal fade show d-block" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel"
+        aria-hidden="true" style="display: block; background-color: rgba(0, 0, 0, 0.5);">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="signupModalLabel">Crear una cuenta</h5>
+                </div>
+                <div class="modal-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <button type="submit" class="btn btn-dark float-end mt-3">Registrarse</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <p class="text-center w-100">
+                        ¿Ya tienes una cuenta? <a href="{% url 'login' %}">Iniciar sesión</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
