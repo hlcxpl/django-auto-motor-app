@@ -12,14 +12,16 @@
         aria-hidden="true" style="display: block; background-color: rgba(0, 0, 0, 0.5);">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="loginModalLabel">Iniciar sesión</h5>
+                <div class="modal-header justify-content-center">
+                    <h5 class="modal-title text-center" id="loginModalLabel">Iniciar sesión</h5>
                 </div>
                 <div class="modal-body">
                     <form method="post">
                         {% csrf_token %}
                         {{ form|crispy }}
-                        <button type="submit" class="btn btn-dark float-end mt-3">Iniciar sesión</button>
+                        <div class="d-flex justify-content-center mt-3">
+                            <button type="submit" class="btn btn-dark">Iniciar sesión</button>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">

@@ -12,16 +12,17 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="vehiculoModalLabel">Agregar Vehículo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    onclick="window.location.href='{% url 'index' %}'"></button>
             </div>
             <div class="modal-body">
                 <form method="post">
                     {% csrf_token %}
                     {{ form|crispy }}
-                    <button type="submit" class="btn btn-dark float-end mt-3">Guardar</button>
+                    <div class="d-flex justify-content-center mt-3">
+                        <button type="submit" class="btn btn-dark">Guardar</button>
+                    </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <a href="{% url 'index' %}" class="btn btn-secondary">Volver a inicio</a>
             </div>
         </div>
     </div>
