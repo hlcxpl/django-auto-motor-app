@@ -46,10 +46,6 @@ venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-O usar el script proporcionado:
-```bash
-bash install-python-deps.sh
-```
 
 ### 4. Configurar base de datos
 
