@@ -152,13 +152,6 @@ Funcionalidades:
 
 ## 🐛 Solución de Problemas Comunes
 
-### Error de Template Syntax
-
-Si encuentras errores de sintaxis en templates, ejecuta:
-```bash
-bash fix_template_syntax.sh
-```
-
 ### Error de Migraciones
 
 Si hay problemas con la base de datos:
