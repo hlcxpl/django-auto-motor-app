@@ -173,15 +173,9 @@
                     </li>
                     {% else %}
                     <li class="nav-item-elegant">
-                        <a class="nav-link-elegant text-dark" href="{% url 'login' %}" style="color: #000 !important;">
-                            <i class="fas fa-sign-in-alt text-dark" style="color: #000 !important;"></i>
-                            <span class="text-dark" style="color: #000 !important;">Iniciar Sesión</span>
-                        </a>
-                    </li>
-                    <li class="nav-item-elegant">
-                        <a class="btn-elegant-primary" href="{% url 'signup' %}">
-                            <i class="fas fa-user-plus"></i>
-                            <span>Registrarse</span>
+                        <a class="btn-elegant-primary" href="{% url 'login' %}">
+                            <i class="fas fa-sign-in-alt"></i>
+                            <span>Iniciar Sesión / Registrarse</span>
                         </a>
                     </li>
                     {% endif %}

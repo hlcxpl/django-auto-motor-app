@@ -165,3 +165,16 @@ htmlcov/
 # Variables de entorno con API keys
 .env
 *.env
+
+# Archivos de documentación del proyecto
+*.md
+!README.md
+
+# Scripts de utilidad temporal
+fix_template_syntax.sh
+create_sample_data.py
+install-python-deps.sh
+
+# Output files
+nohup.out
+*.out

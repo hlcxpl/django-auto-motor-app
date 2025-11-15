@@ -216,7 +216,7 @@
 
                         <div class="form-actions">
                             <button type="submit" class="btn btn-success-modern w-100">
-                                <i class="fas fa-user-plus me-2"></i>Crear Cuenta
+                                <i class="fas fa-user-plus me-2"></i>Registrarse
                             </button>
                         </div>
                     </form>
@@ -225,8 +225,7 @@
                 <!-- Botones de navegación -->
                 <div class="auth-navigation">
                     <div id="switch-to-register" class="auth-switch">
-                        ¿No tienes cuenta? <a href="#" onclick="switchToRegister(); return false;">Crear
-                            cuenta</a>
+                        ¿No tienes cuenta? <a href="#" onclick="switchToRegister(); return false;">Registrarse</a>
                     </div>
                     <div id="switch-to-login" class="auth-switch" style="display: none;">
                         ¿Ya tienes cuenta? <a href="#" onclick="switchToLogin(); return false;">Iniciar
@@ -252,7 +251,7 @@
 
         // Cambiar el título del header
         const header = document.querySelector('.filters-header');
-        header.innerHTML = '<i class="fas fa-user-plus"></i> Crear Cuenta Nueva';
+        header.innerHTML = '<i class="fas fa-user-plus"></i> Registrarse';
     }
 
     function switchToLogin() {
