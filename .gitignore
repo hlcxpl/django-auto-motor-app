@@ -166,14 +166,12 @@ htmlcov/
 .env
 *.env
 
-# Archivos de documentación del proyecto
+# Archivos de documentación del proyecto (excepto README)
 *.md
 !README.md
 
 # Scripts de utilidad temporal
-fix_template_syntax.sh
-create_sample_data.py
-install-python-deps.sh
+*.sh
 
 # Output files
 nohup.out
