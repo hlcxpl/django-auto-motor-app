@@ -1,0 +1,247 @@
+{% extends 'base.html' %}
+
+{% block title %}Agregar Vehículo{% endblock %}
+
+{% block content %}
+<div class="container-modern py-5">
+    <div class="section-header">
+        <h1 class="section-title">
+            <i class="fas fa-car me-3"></i>
+            Publicar Vehículo
+        </h1>
+        <p class="section-subtitle">Complete toda la información para crear un anuncio profesional</p>
+    </div>
+
+    <div class="form-modern-container">
+        <form method="post" enctype="multipart/form-data" class="form-modern">
+            {% csrf_token %}
+
+            <!-- Información Básica -->
+            <div class="form-section">
+                <div class="filters-header">
+                    <i class="fas fa-info-circle"></i>
+                    Información Básica
+                </div>
+                <div class="filters-content">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="filter-group">
+                                <label class="form-label" for="{{ form.marca.id_for_label }}">Marca</label>
+                                {{ form.marca }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="filter-group">
+                                <label class="form-label" for="{{ form.modelo.id_for_label }}">Modelo</label>
+                                {{ form.modelo }}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="filter-group">
+                                <label class="form-label" for="{{ form.año.id_for_label }}">Año</label>
+                                {{ form.año }}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="filter-group">
+                                <label class="form-label" for="{{ form.categoria.id_for_label }}">Categoría</label>
+                                {{ form.categoria }}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="filter-group">
+                                <label class="form-label" for="{{ form.precio.id_for_label }}">Precio</label>
+                                {{ form.precio }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Especificaciones Técnicas -->
+            <div class="form-section">
+                <div class="filters-header">
+                    <i class="fas fa-cogs"></i>
+                    Especificaciones Técnicas
+                </div>
+                <div class="filters-content">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="filter-group">
+                                <label class="form-label" for="{{ form.serial_carroceria.id_for_label }}">Serial
+                                    Carrocería</label>
+                                {{ form.serial_carroceria }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="filter-group">
+                                <label class="form-label" for="{{ form.serial_motor.id_for_label }}">Serial
+                                    Motor</label>
+                                {{ form.serial_motor }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="filter-group">
+                                <label class="form-label" for="{{ form.placa.id_for_label }}">Placa</label>
+                                {{ form.placa }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="filter-group">
+                                <label class="form-label" for="{{ form.condicion.id_for_label }}">Condición</label>
+                                {{ form.condicion }}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="filter-group">
+                                <label class="form-label" for="{{ form.kilometraje.id_for_label }}">Kilometraje</label>
+                                {{ form.kilometraje }}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="filter-group">
+                                <label class="form-label" for="{{ form.transmision.id_for_label }}">Transmisión</label>
+                                {{ form.transmision }}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="filter-group">
+                                <label class="form-label" for="{{ form.combustible.id_for_label }}">Combustible</label>
+                                {{ form.combustible }}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="filter-group">
+                                <label class="form-label" for="{{ form.motor.id_for_label }}">Motor</label>
+                                {{ form.motor }}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="filter-group">
+                                <label class="form-label" for="{{ form.potencia.id_for_label }}">Potencia</label>
+                                {{ form.potencia }}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="filter-group">
+                                <label class="form-label" for="{{ form.color.id_for_label }}">Color</label>
+                                {{ form.color }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="filter-group">
+                                <label class="form-label" for="{{ form.puertas.id_for_label }}">Número de
+                                    Puertas</label>
+                                {{ form.puertas }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Imágenes del Vehículo -->
+            <div class="form-section">
+                <div class="filters-header">
+                    <i class="fas fa-camera"></i>
+                    Imágenes del Vehículo
+                </div>
+                <div class="filters-content">
+                    <div class="row g-3">
+                        <div class="col-md-12">
+                            <div class="filter-group">
+                                <label class="form-label" for="{{ form.imagen_principal.id_for_label }}">Imagen
+                                    Principal</label>
+                                {{ form.imagen_principal }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="filter-group">
+                                <label class="form-label" for="{{ form.imagen_2.id_for_label }}">Imagen 2</label>
+                                {{ form.imagen_2 }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="filter-group">
+                                <label class="form-label" for="{{ form.imagen_3.id_for_label }}">Imagen 3</label>
+                                {{ form.imagen_3 }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="filter-group">
+                                <label class="form-label" for="{{ form.imagen_4.id_for_label }}">Imagen 4</label>
+                                {{ form.imagen_4 }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="filter-group">
+                                <label class="form-label" for="{{ form.imagen_5.id_for_label }}">Imagen 5</label>
+                                {{ form.imagen_5 }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Información de Contacto -->
+            <div class="form-section">
+                <div class="filters-header">
+                    <i class="fas fa-address-book"></i>
+                    Información de Contacto
+                </div>
+                <div class="filters-content">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="filter-group">
+                                <label class="form-label" for="{{ form.telefono_contacto.id_for_label }}">Teléfono de
+                                    Contacto</label>
+                                {{ form.telefono_contacto }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="filter-group">
+                                <label class="form-label" for="{{ form.email_contacto.id_for_label }}">Email de
+                                    Contacto</label>
+                                {{ form.email_contacto }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Descripción -->
+            <div class="form-section">
+                <div class="filters-header">
+                    <i class="fas fa-align-left"></i>
+                    Descripción y Características
+                </div>
+                <div class="filters-content">
+                    <div class="row g-3">
+                        <div class="col-md-12">
+                            <div class="filter-group">
+                                <label class="form-label" for="{{ form.descripcion.id_for_label }}">Descripción</label>
+                                {{ form.descripcion }}
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="filter-group">
+                                <label class="form-label" for="{{ form.caracteristicas.id_for_label }}">Características
+                                    Adicionales</label>
+                                {{ form.caracteristicas }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botones -->
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-accent-modern">
+                        <i class="fas fa-save me-2"></i>Guardar Vehículo
+                    </button>
+                    <a href="{% url 'index' %}" class="btn btn-secondary-modern">
+                        <i class="fas fa-times me-2"></i>Cancelar
+                    </a>
+                </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

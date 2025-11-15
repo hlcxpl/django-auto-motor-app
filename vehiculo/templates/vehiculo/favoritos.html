@@ -1,0 +1,245 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Mis Favoritos - AutoElite{% endblock %}
+
+{% block extra_css %}
+<style>
+    .favorites-header {
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        color: white;
+        padding: 2rem;
+        border-radius: 12px;
+        margin-bottom: 2rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .favorites-header h1 {
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .favorites-header h1 i {
+        color: #ff3b30;
+    }
+
+    .favorites-header p {
+        margin: 0;
+        opacity: 0.9;
+    }
+
+    .vehicle-card-favorite {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e0e0e0;
+        transition: all 0.3s ease;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .vehicle-card-favorite:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .vehicle-image-favorite {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        background: #f8f9fa;
+    }
+
+    .vehicle-content-favorite {
+        padding: 1.5rem;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .vehicle-title-favorite {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #1a1a1a;
+        margin-bottom: 0.5rem;
+    }
+
+    .vehicle-details-favorite {
+        color: #666;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+        flex-grow: 1;
+    }
+
+    .vehicle-details-favorite i {
+        margin-right: 0.5rem;
+        color: #1a1a1a;
+    }
+
+    .vehicle-detail-item {
+        margin-bottom: 0.5rem;
+    }
+
+    .vehicle-price-favorite {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin-bottom: 1rem;
+    }
+
+    .vehicle-actions-favorite {
+        display: flex;
+        gap: 0.75rem;
+    }
+
+    .empty-favorites {
+        text-align: center;
+        padding: 4rem 2rem;
+        background: white;
+        border-radius: 12px;
+        border: 1px solid #e0e0e0;
+    }
+
+    .empty-favorites i {
+        font-size: 5rem;
+        color: #e0e0e0;
+        margin-bottom: 1.5rem;
+    }
+
+    .empty-favorites h3 {
+        color: #666;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .empty-favorites p {
+        color: #999;
+        margin-bottom: 2rem;
+    }
+
+    .remove-favorite-btn {
+        background: transparent;
+        border: 1px solid #e0e0e0;
+        color: #666;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .remove-favorite-btn:hover {
+        background: #ff3b30;
+        color: white;
+        border-color: #ff3b30;
+    }
+
+    .remove-favorite-btn i {
+        margin-right: 0.5rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-modern py-5">
+    <!-- Header -->
+    <div class="favorites-header">
+        <h1>
+            <i class="fas fa-heart"></i>
+            Mis Vehículos Favoritos
+        </h1>
+        <p>Aquí encontrarás todos los vehículos que has guardado como favoritos</p>
+    </div>
+
+    {% if favoritos %}
+    <!-- Grid de Vehículos Favoritos -->
+    <div class="row g-4">
+        {% for vehiculo in favoritos %}
+        <div class="col-md-6 col-lg-4">
+            <div class="vehicle-card-favorite">
+                <img src="{{ vehiculo.get_imagen_principal_url }}" alt="{{ vehiculo.marca }} {{ vehiculo.modelo }}"
+                    class="vehicle-image-favorite"
+                    onerror="this.onerror=null; this.src='https://picsum.photos/seed/{{ vehiculo.marca }}{{ vehiculo.modelo }}/800/600';">
+
+                <div class="vehicle-content-favorite">
+                    <h3 class="vehicle-title-favorite">
+                        {{ vehiculo.marca }} {{ vehiculo.modelo }}
+                    </h3>
+
+                    <div class="vehicle-details-favorite">
+                        <div class="vehicle-detail-item">
+                            <i class="fas fa-calendar"></i>
+                            <strong>Año:</strong> {{ vehiculo.año }}
+                        </div>
+                        <div class="vehicle-detail-item">
+                            <i class="fas fa-tag"></i>
+                            <strong>Categoría:</strong> {{ vehiculo.categoria }}
+                        </div>
+                        <div class="vehicle-detail-item">
+                            <i class="fas fa-palette"></i>
+                            <strong>Color:</strong> {{ vehiculo.color }}
+                        </div>
+                    </div>
+
+                    <div class="vehicle-price-favorite">
+                        ${{ vehiculo.precio|floatformat:0 }}
+                    </div>
+
+                    <div class="vehicle-actions-favorite">
+                        <a href="{% url 'vehiculo:detalle' vehiculo.id %}" class="btn btn-accent-modern flex-grow-1">
+                            <i class="fas fa-eye"></i> Ver Detalles
+                        </a>
+                        <button class="btn remove-favorite-btn" onclick="removeFavorite({{ vehiculo.id }})"
+                            title="Eliminar de favoritos">
+                            <i class="fas fa-heart-broken"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <!-- Estado Vacío -->
+    <div class="empty-favorites">
+        <i class="fas fa-heart-broken"></i>
+        <h3>Aún no tienes vehículos favoritos</h3>
+        <p>Explora nuestro catálogo y guarda los vehículos que más te interesen</p>
+        <a href="{% url 'vehiculo:lista' %}" class="btn btn-accent-modern">
+            <i class="fas fa-search"></i> Explorar Catálogo
+        </a>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+    function removeFavorite(vehiculoId) {
+        if (confirm('¿Estás seguro de que deseas eliminar este vehículo de tus favoritos?')) {
+            fetch(`/vehiculo/favorito/${vehiculoId}/toggle/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Recargar la página para actualizar la lista
+                        window.location.reload();
+                    } else {
+                        alert('Error al eliminar el favorito. Por favor, intenta de nuevo.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error al eliminar el favorito. Por favor, intenta de nuevo.');
+                });
+        }
+    }
+</script>
+{% endblock %}

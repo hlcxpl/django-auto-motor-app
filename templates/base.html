@@ -1,0 +1,323 @@
+{% load static %}
+{% load django_bootstrap5 %}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es" lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}AutoElite - Vehículos Premium{% endblock %}</title>
+
+    <!-- Bootstrap CSS -->
+    {% bootstrap_css %}
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+
+    <!-- Estilos modernos -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/modern.css' %}" />
+
+    <style>
+        /* Estilos globales para filters-header y filters-content */
+        .filters-header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #333;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0;
+        }
+
+        .filters-header i {
+            color: #007AFF;
+            font-size: 1.2rem;
+        }
+
+        .filters-content {
+            padding: 2rem;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-top: none;
+        }
+
+        .form-section {
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .form-section:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Estandarizar el ancho de todas las secciones del formulario */
+        .form-modern-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .form-modern-container .form-section {
+            width: 100%;
+            max-width: none;
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        .form-modern-container .filters-content {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 2.5rem;
+        }
+
+        /* Asegurar que todas las secciones tengan el mismo ancho */
+        .container-modern .form-section,
+        .form-modern .form-section {
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+
+        /* Asegurar que los formularios tengan el mismo aspecto */
+        .auth-form .filters-content {
+            border-radius: 0 0 8px 8px;
+        }
+    </style>
+
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+    <!-- Navegación moderna elegante -->
+    <nav class="navbar navbar-expand-lg navbar-light navbar-modern-elegant fixed-top" data-bs-theme="light">
+        <div class="container-modern">
+            <a class="navbar-brand-elegant" href="{% url 'index' %}">
+                <div class="brand-icon">
+                    <i class="fas fa-car-side"></i>
+                </div>
+                <span class="brand-text">AutoElite</span>
+            </a>
+
+            <button class="navbar-toggler-elegant" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="toggler-icon"></span>
+                <span class="toggler-icon"></span>
+                <span class="toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav-elegant me-auto">
+                    <li class="nav-item-elegant">
+                        <a class="nav-link-elegant text-dark" href="{% url 'index' %}" style="color: #000 !important;">
+                            <i class="fas fa-home text-dark" style="color: #000 !important;"></i>
+                            <span class="text-dark" style="color: #000 !important;">Inicio</span>
+                        </a>
+                    </li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item-elegant">
+                        <a class="nav-link-elegant text-dark" href="{% url 'vehiculo:lista' %}"
+                            style="color: #000 !important;">
+                            <i class="fas fa-th-large text-dark" style="color: #000 !important;"></i>
+                            <span class="text-dark" style="color: #000 !important;">Catálogo</span>
+                        </a>
+                    </li>
+                    <li class="nav-item-elegant">
+                        <a class="nav-link-elegant text-dark" href="{% url 'vehiculo:registro' %}"
+                            style="color: #000 !important;">
+                            <i class="fas fa-plus-circle text-dark" style="color: #000 !important;"></i>
+                            <span class="text-dark" style="color: #000 !important;">Publicar</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+
+                <ul class="navbar-nav-elegant">
+                    {% if user.is_authenticated %}
+                    <li class="nav-item-elegant dropdown">
+                        <a class="nav-link-elegant dropdown-toggle-elegant text-dark" href="#" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false" style="color: #000 !important;">
+                            <div class="user-avatar-elegant">
+                                <i class="fas fa-user text-white" style="color: #fff !important;"></i>
+                            </div>
+                            <span class="user-name text-dark" style="color: #000 !important;">{{ user.username }}</span>
+                            <i class="fas fa-chevron-down dropdown-arrow text-dark" style="color: #000 !important;"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-elegant dropdown-menu-end">
+                            <li><a class="dropdown-item dropdown-item-elegant" href="{% url 'vehiculo:perfil' %}">
+                                    <i class="fas fa-user"></i>
+                                    <span>Mi Perfil</span>
+                                </a></li>
+                            <li><a class="dropdown-item dropdown-item-elegant" href="{% url 'vehiculo:lista' %}">
+                                    <i class="fas fa-car"></i>
+                                    <span>Mis Vehículos</span>
+                                </a></li>
+                            <li><a class="dropdown-item dropdown-item-elegant" href="{% url 'vehiculo:favoritos' %}">
+                                    <i class="fas fa-heart"></i>
+                                    <span>Favoritos</span>
+                                </a></li>
+                            <li>
+                                <div class="dropdown-divider dropdown-divider-elegant"></div>
+                            </li>
+                            <li><a class="dropdown-item dropdown-item-elegant logout" href="{% url 'logout' %}">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    <span>Cerrar Sesión</span>
+                                </a></li>
+                        </ul>
+                    </li>
+                    {% else %}
+                    <li class="nav-item-elegant">
+                        <a class="nav-link-elegant text-dark" href="{% url 'login' %}" style="color: #000 !important;">
+                            <i class="fas fa-sign-in-alt text-dark" style="color: #000 !important;"></i>
+                            <span class="text-dark" style="color: #000 !important;">Iniciar Sesión</span>
+                        </a>
+                    </li>
+                    <li class="nav-item-elegant">
+                        <a class="btn-elegant-primary" href="{% url 'signup' %}">
+                            <i class="fas fa-user-plus"></i>
+                            <span>Registrarse</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <main class="main-content">
+        {% if messages %}
+        <div class="container-modern">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                <i class="fas fa-info-circle me-2"></i>
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-modern mt-5">
+        <div class="container-modern">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="footer-brand">
+                        <i class="fas fa-car-side me-2"></i>
+                        <strong>AutoElite</strong>
+                    </div>
+                    <p class="footer-description">
+                        La plataforma líder para compra y venta de vehículos premium.
+                        Conectamos vendedores y compradores con confianza y transparencia.
+                    </p>
+                </div>
+                <div class="col-md-3">
+                    <h6>Enlaces</h6>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'index' %}">Inicio</a></li>
+                        {% if user.is_authenticated %}
+                        <li><a href="{% url 'vehiculo:lista' %}">Catálogo</a></li>
+                        <li><a href="{% url 'vehiculo:registro' %}">Publicar</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h6>Contacto</h6>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-envelope me-2"></i>info@autoelite.com</p>
+                        <p><i class="fas fa-phone me-2"></i>+57 300 123 4567</p>
+                    </div>
+                </div>
+            </div>
+            <hr class="footer-divider" />
+            <div class="footer-bottom">
+                <p>&#169; 2024 AutoElite. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JavaScript -->
+    {% bootstrap_javascript %}
+
+    <!-- Scripts adicionales -->
+    <script>
+        // Smooth scrolling para enlaces
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Manejar dropdown personalizado
+        document.addEventListener('DOMContentLoaded', function () {
+            const dropdownToggles = document.querySelectorAll('.dropdown-toggle-elegant');
+
+            dropdownToggles.forEach(toggle => {
+                toggle.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    const dropdownItem = this.closest('.nav-item-elegant.dropdown');
+                    const isOpen = dropdownItem.classList.contains('show');
+
+                    // Cerrar todos los otros dropdowns
+                    document.querySelectorAll('.nav-item-elegant.dropdown.show').forEach(item => {
+                        if (item !== dropdownItem) {
+                            item.classList.remove('show');
+                            item.querySelector('.dropdown-toggle-elegant').setAttribute('aria-expanded', 'false');
+                        }
+                    });
+
+                    // Toggle el dropdown actual
+                    if (isOpen) {
+                        dropdownItem.classList.remove('show');
+                        this.setAttribute('aria-expanded', 'false');
+                    } else {
+                        dropdownItem.classList.add('show');
+                        this.setAttribute('aria-expanded', 'true');
+                    }
+                });
+            });
+
+            // Cerrar dropdown al hacer click fuera
+            document.addEventListener('click', function (e) {
+                const openDropdowns = document.querySelectorAll('.nav-item-elegant.dropdown.show');
+                openDropdowns.forEach(dropdown => {
+                    if (!dropdown.contains(e.target)) {
+                        dropdown.classList.remove('show');
+                        dropdown.querySelector('.dropdown-toggle-elegant').setAttribute('aria-expanded', 'false');
+                    }
+                });
+            });
+        });
+
+        // Auto-hide alerts después de 5 segundos
+        setTimeout(() => {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => {
+                const bsAlert = new bootstrap.Alert(alert);
+                bsAlert.close();
+            });
+        }, 5000);
+    </script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}AutoElite - Catálogo Premium{% endblock %}
+
+{% block content %}
+<!-- Banner de Video Principal -->
+<section class="video-hero">
+    <!-- Video de fondo -->
+    <video class="video-background" autoplay="autoplay" muted="muted" loop="loop">
+        <source src="https://cdn.pixabay.com/video/2021/09/17/88702-611027067_large.mp4" type="video/mp4" />
+        <source src="https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4" type="video/mp4" />
+    </video>
+
+    <div class="video-overlay"></div>
+
+    <div class="video-content">
+        <h1 class="fade-in-up"
+            style="font-size: 4.5rem; font-weight: 900; margin-bottom: 1.5rem; text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);">
+            🚗 AutoElite Premium
+        </h1>
+        <p class="fade-in-up"
+            style="font-size: 1.6rem; margin-bottom: 2.5rem; opacity: 0.95; line-height: 1.4; animation-delay: 0.2s;">
+            La plataforma más completa para gestionar y explorar vehículos con tecnología avanzada y datos en tiempo
+            real
+        </p>
+        <a href="#features" class="btn-primary-cta fade-in-up" style="animation-delay: 0.5s;">
+            ✨ Descubrir Plataforma
+        </a>
+    </div>
+</section>
+
+<!-- Sección de Autos Destacados -->
+<section id="cars-showcase" class="py-5" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">🏆 Vehículos Destacados</h2>
+            <p class="section-subtitle">
+                Explora nuestra selección premium de vehículos con características excepcionales y tecnología de última
+                generación
+            </p>
+        </div>
+
+        <div class="grid-responsive">
+            <!-- Auto 1 - Deportivo -->
+            <div class="card-modern floating">
+                <div
+                    style="background: url('https://cdn.motor1.com/images/mgl/BkvzL/s3/ferrari-488-gtb-2024.webp') center/cover; height: 280px; position: relative;">
+                    <div
+                        style="position: absolute; top: 15px; right: 15px; background: rgba(0, 0, 0, 0.7); color: white; padding: 8px 15px; border-radius: 20px; font-size: 0.9rem; font-weight: 600;">
+                        Deportivo
+                    </div>
+                    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.3);">
+                    </div>
+                </div>
+                <div class="card-modern__body">
+                    <h3 style="font-size: 1.4rem; font-weight: 700; color: #1a1a1a; margin-bottom: 0.5rem;">Ferrari 488
+                        GTB 2024</h3>
+                    <p style="color: #666666; margin-bottom: 1.5rem; font-size: 1.1rem;">Supercar V8 biturbo, 670 HP,
+                        0-100 km/h en 3.0s</p>
+                    <p style="font-size: 1.8rem; font-weight: 700; color: #1a1a1a;">Desde $330,000</p>
+                </div>
+            </div>
+
+            <!-- Auto 2 - SUV Luxury -->
+            <div class="card-modern floating" style="animation-delay: 0.3s;">
+                <div
+                    style="background: url('https://cdn.bmwblog.com/wp-content/uploads/2023/04/2024-BMW-X7-M50i-exterior-01.jpg') center/cover; height: 280px; position: relative;">
+                    <div
+                        style="position: absolute; top: 15px; right: 15px; background: rgba(0, 0, 0, 0.7); color: white; padding: 8px 15px; border-radius: 20px; font-size: 0.9rem; font-weight: 600;">
+                        SUV Premium
+                    </div>
+                    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.3);">
+                    </div>
+                </div>
+                <div class="card-modern__body">
+                    <h3 style="font-size: 1.4rem; font-weight: 700; color: #1a1a1a; margin-bottom: 0.5rem;">BMW X7 M50i
+                        2024</h3>
+                    <p style="color: #666666; margin-bottom: 1.5rem; font-size: 1.1rem;">SUV de lujo 7 plazas, motor V8
+                        530 HP, xDrive</p>
+                    <p style="font-size: 1.8rem; font-weight: 700; color: #1a1a1a;">Desde $105,000</p>
+                </div>
+            </div>
+
+            <!-- Auto 3 - Sedán Executive -->
+            <div class="card-modern floating" style="animation-delay: 0.6s;">
+                <div
+                    style="background: url('https://cdn.motor1.com/images/mgl/9mMqoZ/s3/2024-mercedes-s-class-exterior.jpg') center/cover; height: 280px; position: relative;">
+                    <div
+                        style="position: absolute; top: 15px; right: 15px; background: rgba(0, 0, 0, 0.7); color: white; padding: 8px 15px; border-radius: 20px; font-size: 0.9rem; font-weight: 600;">
+                        Sedán
+                    </div>
+                    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.3);">
+                    </div>
+                </div>
+                <div class="card-modern__body">
+                    <h3 style="font-size: 1.4rem; font-weight: 700; color: #1a1a1a; margin-bottom: 0.5rem;">Mercedes
+                        S-Class 2024</h3>
+                    <p style="color: #666666; margin-bottom: 1.5rem; font-size: 1.1rem;">Sedán ejecutivo con IA avanzada
+                        y conducción autónoma</p>
+                    <p style="font-size: 1.8rem; font-weight: 700; color: #1a1a1a;">Desde $125,000</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Sección de Estadísticas -->
+<section class="py-5" style="background: linear-gradient(135deg, #1a1a1a 0%, #495057 100%); color: white;">
+    <div class="container">
+        <div class="text-center" style="margin-bottom: 3rem;">
+            <h2 style="font-size: 2.8rem; font-weight: 700; margin-bottom: 1rem;">🌟 AutoElite en Números</h2>
+        </div>
+        <div class="stats-layout">
+            <div class="stats-item" style="background: transparent; box-shadow: none; border: none;">
+                <h3
+                    style="font-size: 3.5rem; font-weight: 900; margin-bottom: 0.8rem; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);">
+                    2500+</h3>
+                <p style="font-size: 1.2rem; opacity: 0.9; font-weight: 500;">Vehículos Premium Disponibles</p>
+            </div>
+            <div class="stats-item" style="background: transparent; box-shadow: none; border: none;">
+                <h3
+                    style="font-size: 3.5rem; font-weight: 900; margin-bottom: 0.8rem; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);">
+                    80+</h3>
+                <p style="font-size: 1.2rem; opacity: 0.9; font-weight: 500;">Marcas Exclusivas</p>
+            </div>
+            <div class="stats-item" style="background: transparent; box-shadow: none; border: none;">
+                <h3
+                    style="font-size: 3.5rem; font-weight: 900; margin-bottom: 0.8rem; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);">
+                    24/7</h3>
+                <p style="font-size: 1.2rem; opacity: 0.9; font-weight: 500;">Soporte Especializado VIP</p>
+            </div>
+            <div class="stats-item" style="background: transparent; box-shadow: none; border: none;">
+                <h3
+                    style="font-size: 3.5rem; font-weight: 900; margin-bottom: 0.8rem; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);">
+                    100%</h3>
+                <p style="font-size: 1.2rem; opacity: 0.9; font-weight: 500;">Datos API Verificados</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Sección de Acceso Discreto -->
+<section class="py-5" style="background: #1a1a1a; color: white;">
+    <div class="container">
+        <div class="text-center" style="max-width: 600px; margin: 0 auto;">
+            <h2 style="font-size: 2rem; font-weight: 700; margin-bottom: 1rem;">🔐 Acceso Exclusivo</h2>
+            <p style="font-size: 1.1rem; opacity: 0.8; margin-bottom: 2rem;">
+                Únete a AutoElite para acceder al catálogo completo, herramientas avanzadas y experiencias premium
+            </p>
+            <div>
+                <a href="{% url 'login' %}" class="btn-primary-cta" style="margin: 0.5rem;">
+                    🚀 Acceder al Catálogo
+                </a>
+                <a href="{% url 'signup' %}" class="btn-secondary-cta" style="margin: 0.5rem;">
+                    ✨ Crear Cuenta Premium
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

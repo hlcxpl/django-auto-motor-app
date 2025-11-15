@@ -1,0 +1,292 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Mi Perfil - AutoElite{% endblock %}
+
+{% block extra_css %}
+<style>
+    .profile-container {
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .profile-header {
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        color: white;
+        padding: 2rem;
+        border-radius: 12px 12px 0 0;
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        color: #1a1a1a;
+        flex-shrink: 0;
+    }
+
+    .profile-info h1 {
+        font-size: 1.8rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .profile-info p {
+        margin: 0;
+        opacity: 0.9;
+    }
+
+    .profile-content {
+        background: white;
+        border: 1px solid #e0e0e0;
+        border-top: none;
+        border-radius: 0 0 12px 12px;
+        padding: 2rem;
+    }
+
+    .info-section {
+        margin-bottom: 2rem;
+    }
+
+    .info-section:last-child {
+        margin-bottom: 0;
+    }
+
+    .info-label {
+        color: #666;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.5rem;
+    }
+
+    .info-value {
+        color: #1a1a1a;
+        font-size: 1.1rem;
+        padding: 0.75rem 1rem;
+        background: #f8f9fa;
+        border-radius: 8px;
+        border: 1px solid #e0e0e0;
+    }
+
+    .info-value i {
+        margin-right: 0.75rem;
+        color: #666;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid #e0e0e0;
+    }
+
+    .stat-card {
+        text-align: center;
+        padding: 1.5rem;
+        background: #f8f9fa;
+        border-radius: 8px;
+        border: 1px solid #e0e0e0;
+    }
+
+    .stat-icon {
+        font-size: 2rem;
+        color: #1a1a1a;
+        margin-bottom: 0.75rem;
+    }
+
+    .stat-value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin-bottom: 0.25rem;
+    }
+
+    .stat-label {
+        color: #666;
+        font-size: 0.9rem;
+    }
+
+    .edit-mode .info-value {
+        padding: 0;
+        background: transparent;
+        border: none;
+    }
+
+    .edit-mode input {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 1.1rem;
+    }
+
+    .edit-mode input:focus {
+        outline: none;
+        border-color: #1a1a1a;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-modern py-5">
+    <div class="profile-container">
+        <!-- Header del Perfil -->
+        <div class="profile-header">
+            <div class="profile-avatar">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="profile-info">
+                <h1>{{ user.get_full_name|default:user.username }}</h1>
+                <p><i class="fas fa-at"></i> {{ user.username }}</p>
+            </div>
+        </div>
+
+        <!-- Contenido del Perfil -->
+        <div class="profile-content" id="profileContent">
+            <form method="post" id="profileForm">
+                {% csrf_token %}
+
+                <!-- Información Personal -->
+                <div class="info-section">
+                    <div class="info-label">
+                        <i class="fas fa-envelope"></i> Correo Electrónico
+                    </div>
+                    <div class="info-value">
+                        <i class="fas fa-envelope"></i>
+                        <span id="emailDisplay">{{ user.email|default:"No especificado" }}</span>
+                        <input type="email" name="email" class="d-none" value="{{ user.email }}" id="emailInput">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="info-section">
+                            <div class="info-label">
+                                <i class="fas fa-user"></i> Nombre
+                            </div>
+                            <div class="info-value">
+                                <i class="fas fa-user"></i>
+                                <span id="firstNameDisplay">{{ user.first_name|default:"No especificado" }}</span>
+                                <input type="text" name="first_name" class="d-none" value="{{ user.first_name }}"
+                                    id="firstNameInput">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-section">
+                            <div class="info-label">
+                                <i class="fas fa-user"></i> Apellido
+                            </div>
+                            <div class="info-value">
+                                <i class="fas fa-user"></i>
+                                <span id="lastNameDisplay">{{ user.last_name|default:"No especificado" }}</span>
+                                <input type="text" name="last_name" class="d-none" value="{{ user.last_name }}"
+                                    id="lastNameInput">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botones de acción -->
+                <div class="d-flex gap-2 mt-4">
+                    <button type="button" class="btn btn-accent-modern" id="editBtn" onclick="toggleEditMode()">
+                        <i class="fas fa-edit"></i> Editar Perfil
+                    </button>
+                    <button type="submit" class="btn btn-accent-modern d-none" id="saveBtn">
+                        <i class="fas fa-save"></i> Guardar Cambios
+                    </button>
+                    <button type="button" class="btn btn-secondary-modern d-none" id="cancelBtn"
+                        onclick="toggleEditMode()">
+                        <i class="fas fa-times"></i> Cancelar
+                    </button>
+                    <a href="{% url 'vehiculo:lista' %}" class="btn btn-secondary-modern ms-auto">
+                        <i class="fas fa-arrow-left"></i> Volver al Catálogo
+                    </a>
+                </div>
+            </form>
+
+            <!-- Estadísticas del Usuario -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <div class="stat-value">{{ vehiculos_count|default:0 }}</div>
+                    <div class="stat-label">Vehículos Publicados</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="stat-value">{{ favoritos_count|default:0 }}</div>
+                    <div class="stat-label">Favoritos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar"></i>
+                    </div>
+                    <div class="stat-value">{{ user.date_joined|date:"Y" }}</div>
+                    <div class="stat-label">Miembro Desde</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let isEditMode = false;
+
+    function toggleEditMode() {
+        isEditMode = !isEditMode;
+        const content = document.getElementById('profileContent');
+        const editBtn = document.getElementById('editBtn');
+        const saveBtn = document.getElementById('saveBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+
+        if (isEditMode) {
+            content.classList.add('edit-mode');
+
+            // Mostrar inputs, ocultar displays
+            document.getElementById('emailDisplay').classList.add('d-none');
+            document.getElementById('emailInput').classList.remove('d-none');
+            document.getElementById('firstNameDisplay').classList.add('d-none');
+            document.getElementById('firstNameInput').classList.remove('d-none');
+            document.getElementById('lastNameDisplay').classList.add('d-none');
+            document.getElementById('lastNameInput').classList.remove('d-none');
+
+            // Cambiar botones
+            editBtn.classList.add('d-none');
+            saveBtn.classList.remove('d-none');
+            cancelBtn.classList.remove('d-none');
+        } else {
+            content.classList.remove('edit-mode');
+
+            // Ocultar inputs, mostrar displays
+            document.getElementById('emailDisplay').classList.remove('d-none');
+            document.getElementById('emailInput').classList.add('d-none');
+            document.getElementById('firstNameDisplay').classList.remove('d-none');
+            document.getElementById('firstNameInput').classList.add('d-none');
+            document.getElementById('lastNameDisplay').classList.remove('d-none');
+            document.getElementById('lastNameInput').classList.add('d-none');
+
+            // Cambiar botones
+            editBtn.classList.remove('d-none');
+            saveBtn.classList.add('d-none');
+            cancelBtn.classList.add('d-none');
+        }
+    }
+</script>
+{% endblock %}

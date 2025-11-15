@@ -1,0 +1,303 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Inicio - AutoElite{% endblock %}
+
+{% block extra_css %}
+<style>
+    .hero-section {
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        background: #000;
+    }
+
+    .video-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 1;
+        opacity: 0.7;
+    }
+
+    .video-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 100%);
+        z-index: 2;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 3;
+        color: white;
+    }
+
+    .hero-title {
+        font-size: 4rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 1.5rem;
+        letter-spacing: -0.02em;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero-subtitle {
+        font-size: 1.25rem;
+        color: rgba(255, 255, 255, 0.9);
+        margin-bottom: 2.5rem;
+        max-width: 600px;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero-stats {
+        display: flex;
+        gap: 3rem;
+        margin-top: 3rem;
+    }
+
+    .stat-item {
+        text-align: center;
+        backdrop-filter: blur(10px);
+        background: rgba(255, 255, 255, 0.1);
+        padding: 1.5rem;
+        border-radius: var(--border-radius);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #007aff;
+        display: block;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    .stat-label {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+    }
+
+    .btn-glass {
+        backdrop-filter: blur(10px);
+        background: rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: white;
+        transition: all var(--transition-normal);
+    }
+
+    .btn-glass:hover {
+        background: rgba(255, 255, 255, 0.25);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .features-section {
+        padding: 5rem 0;
+        background-color: var(--color-background);
+    }
+
+    .feature-card {
+        background: white;
+        border-radius: 16px;
+        padding: 2rem;
+        text-align: center;
+        border: 1px solid var(--color-border);
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .feature-icon {
+        width: 64px;
+        height: 64px;
+        background: var(--color-accent);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        color: white;
+        font-size: 1.5rem;
+    }
+
+    .cta-section {
+        background: white;
+        padding: 4rem 0;
+        text-align: center;
+    }
+
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.5rem;
+        }
+
+        .hero-stats {
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .stat-item {
+            padding: 1rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section con Video Background -->
+<section class="hero-section">
+    <!-- Video de fondo -->
+    <video class="video-background" autoplay loop muted playsinline>
+        <source src="https://cdn.pixabay.com/video/2023/09/21/181537-866999852_large.mp4" type="video/mp4">
+        <source src="https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4" type="video/mp4">
+        Tu navegador no soporta la reproducción de videos.
+    </video>
+
+    <!-- Overlay del video -->
+    <div class="video-overlay"></div>
+
+    <div class="container-modern">
+        <div class="row align-items-center">
+            <div class="col-lg-8 hero-content">
+                <h1 class="hero-title">
+                    Encuentra tu
+                    <span style="color: #007aff;">vehículo perfecto</span>
+                </h1>
+                <p class="hero-subtitle">
+                    La plataforma más confiable para comprar y vender vehículos premium.
+                    Conectamos a compradores y vendedores con transparencia total.
+                </p>
+                <div class="d-flex gap-3 mb-4">
+                    <a href="{% url 'vehiculo:lista' %}" class="btn btn-accent-modern">
+                        <i class="fas fa-search me-2"></i>
+                        Explorar Catálogo
+                    </a>
+                    <a href="{% url 'vehiculo:registro' %}" class="btn btn-glass">
+                        <i class="fas fa-plus me-2"></i>
+                        Vender Vehículo
+                    </a>
+                </div>
+
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number" id="vehicle-count">{{ total_vehiculos|default:"0" }}</span>
+                        <span class="stat-label">Vehículos</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">500+</span>
+                        <span class="stat-label">Usuarios</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">98%</span>
+                        <span class="stat-label">Satisfacción</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section --><!-- Features Section -->
+<section class="features-section">
+    <div class="container-modern">
+        <div class="section-header">
+            <h2 class="section-title">¿Por qué elegir AutoElite?</h2>
+            <p class="section-subtitle">
+                Ofrecemos la mejor experiencia en compra y venta de vehículos
+            </p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h4>Verificación Total</h4>
+                    <p class="text-muted">
+                        Todos los vehículos pasan por un proceso riguroso de verificación
+                        para garantizar calidad y autenticidad.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h4>Búsqueda Avanzada</h4>
+                    <p class="text-muted">
+                        Encuentra exactamente lo que buscas con nuestros filtros
+                        inteligentes y búsqueda personalizada.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h4>Transacciones Seguras</h4>
+                    <p class="text-muted">
+                        Facilitamos transacciones seguras y transparentes
+                        entre compradores y vendedores.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container-modern">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h3>¿Listo para encontrar tu próximo vehículo?</h3>
+                <p class="text-muted mb-4">
+                    Únete a miles de usuarios que ya confían en AutoElite
+                </p>
+                <a href="{% url 'vehiculo:lista' %}" class="btn btn-accent-modern btn-lg">
+                    Comenzar Ahora
+                    <i class="fas fa-arrow-right ms-2"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Animación del contador
+    document.addEventListener('DOMContentLoaded', function () {
+        const vehicleCount = document.getElementById('vehicle-count');
+        const targetCount = parseInt(vehicleCount.textContent) || 0;
+        let currentCount = 0;
+
+        const increment = Math.ceil(targetCount / 50);
+        const timer = setInterval(() => {
+            currentCount += increment;
+            if (currentCount >= targetCount) {
+                currentCount = targetCount;
+                clearInterval(timer);
+            }
+            vehicleCount.textContent = currentCount;
+        }, 50);
+    });
+</script>
+{% endblock %}

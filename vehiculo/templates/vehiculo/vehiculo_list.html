@@ -1,0 +1,322 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Catálogo de Vehículos - AutoElite{% endblock %}
+
+{% block extra_css %}
+<style>
+    .filters-section {
+        background: white;
+        border-radius: var(--border-radius-lg);
+        padding: 0;
+        margin-bottom: var(--spacing-xl);
+        box-shadow: var(--shadow-sm);
+        border: 1px solid var(--color-border);
+        overflow: hidden;
+    }
+
+    .filters-header {
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        color: white;
+        padding: var(--spacing-lg);
+        border-bottom: 1px solid #333;
+        font-weight: var(--font-weight-semibold);
+        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-sm);
+    }
+
+    .filters-header i {
+        color: #007AFF;
+    }
+
+    .filters-content {
+        padding: var(--spacing-lg);
+        background: white;
+    }
+
+    .filter-group {
+        margin-bottom: var(--spacing-md);
+    }
+
+    .filter-group .form-label {
+        color: var(--color-gray-700);
+        font-weight: var(--font-weight-medium);
+        margin-bottom: var(--spacing-sm);
+        font-size: 0.9rem;
+    }
+
+    .results-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: var(--spacing-xl);
+        padding-bottom: var(--spacing-md);
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .results-count {
+        color: var(--color-gray-600);
+        font-size: 0.9rem;
+    }
+
+    .sort-dropdown {
+        min-width: 200px;
+    }
+
+    .no-results {
+        text-align: center;
+        padding: var(--spacing-xxl);
+        color: var(--color-gray-500);
+    }
+
+    .no-results i {
+        font-size: 4rem;
+        margin-bottom: var(--spacing-lg);
+        color: var(--color-gray-300);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-modern">
+    <!-- Header -->
+    <div class="section-header">
+        <h1 class="section-title">Catálogo de Vehículos</h1>
+        <p class="section-subtitle">Encuentra el vehículo perfecto para ti</p>
+    </div>
+
+    <!-- Filtros -->
+    <div class="filters-section">
+        <div class="filters-header">
+            <i class="fas fa-filter"></i>
+            Filtros de Búsqueda
+        </div>
+        <div class="filters-content">
+            <form method="get" id="filter-form">
+                {% csrf_token %}
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <div class="filter-group">
+                            <label class="form-label">Marca</label>
+                            <select name="marca" class="form-control-modern">
+                                <option value="">Todas las marcas</option>
+                                {% for marca in marcas_disponibles %}
+                                <option value="{{ marca }}" {% if marca == current_marca %}selected{% endif %}>
+                                    {{ marca }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="filter-group">
+                            <label class="form-label">Categoría</label>
+                            <select name="categoria" class="form-control-modern">
+                                <option value="">Todas las categorías</option>
+                                {% for categoria in categorias_disponibles %}
+                                <option value="{{ categoria }}" {% if categoria == current_categoria %}selected{% endif %}>
+                                    {{ categoria }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="filter-group">
+                            <label class="form-label">Precio Min</label>
+                            <input type="number" name="precio_min" class="form-control-modern" placeholder="$ Min"
+                                value="{{ current_precio_min }}">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="filter-group">
+                            <label class="form-label">Precio Max</label>
+                            <input type="number" name="precio_max" class="form-control-modern" placeholder="$ Max"
+                                value="{{ current_precio_max }}">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="filter-group">
+                            <label class="form-label">&nbsp;</label>
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-accent-modern w-100">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                                <a href="{% url 'vehiculo:lista' %}" class="btn btn-secondary-modern">
+                                    <i class="fas fa-undo"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Resultados Header -->
+    <div class="results-header">
+        <div class="results-count">
+            <strong>{{ vehiculos|length }}</strong> vehículo{{ vehiculos|length|pluralize }}
+            {% if current_marca or current_categoria or current_precio_min or current_precio_max %}
+            con filtros aplicados
+            {% endif %}
+        </div>
+        <div class="sort-dropdown">
+            <select class="form-control-modern" onchange="sortVehicles(this.value)">
+                <option value="fecha">Más recientes</option>
+                <option value="precio_asc">Precio: menor a mayor</option>
+                <option value="precio_desc">Precio: mayor a menor</option>
+                <option value="kilometraje">Menor kilometraje</option>
+                <option value="año">Más nuevos</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Grid de Vehículos -->
+    {% if vehiculos %}
+    <div class="vehicle-grid" id="vehicles-container">
+        {% for vehiculo in vehiculos %}
+        <div class="vehicle-card" data-price="{{ vehiculo.precio }}" data-year="{{ vehiculo.año }}"
+            data-km="{{ vehiculo.kilometraje }}">
+            <div class="position-relative">
+                <!-- La imagen se obtiene del método get_imagen_principal_url que usa CDN automáticamente -->
+                <img src="{{ vehiculo.get_imagen_principal_url }}" alt="{{ vehiculo.marca }} {{ vehiculo.modelo }}"
+                    class="vehicle-image"
+                    onerror="this.onerror=null; this.src='https://picsum.photos/seed/{{ vehiculo.marca }}{{ vehiculo.modelo }}/800/600';">
+
+
+                {% if vehiculo.destacado %}
+                <div class="position-absolute top-0 end-0 m-3">
+                    <span class="badge" style="background-color: var(--color-accent);">
+                        <i class="fas fa-star me-1"></i>Destacado
+                    </span>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="vehicle-info">
+                <h3 class="vehicle-title">{{ vehiculo.marca }} {{ vehiculo.modelo }}</h3>
+                <div class="vehicle-price">${{ vehiculo.precio_formateado }}</div>
+
+                <div class="vehicle-specs">
+                    <span class="vehicle-spec">
+                        <i class="fas fa-calendar me-1"></i>{{ vehiculo.año }}
+                    </span>
+                    <span class="vehicle-spec">
+                        <i class="fas fa-road me-1"></i>{{ vehiculo.kilometraje_formateado }}
+                    </span>
+                    <span class="vehicle-spec">
+                        <i class="fas fa-cogs me-1"></i>{{ vehiculo.transmision }}
+                    </span>
+                    <span class="vehicle-spec">
+                        <i class="fas fa-gas-pump me-1"></i>{{ vehiculo.combustible }}
+                    </span>
+                </div>
+
+                {% if vehiculo.descripcion %}
+                <p class="text-muted small mt-2">
+                    {{ vehiculo.descripcion|truncatewords:15 }}
+                </p>
+                {% endif %}
+
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div class="d-flex align-items-center text-muted small">
+                        {% if vehiculo.vendedor %}
+                        <i class="fas fa-user me-1"></i>{{ vehiculo.vendedor.username }}
+                        {% endif %}
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-sm btn-secondary-modern favorite-btn"
+                            data-vehiculo-id="{{ vehiculo.id }}" onclick="toggleFavorite({{ vehiculo.id }}, this)">
+                            <i class="{% if vehiculo.id in favoritos_ids %}fas{% else %}far{% endif %} fa-heart"></i>
+                        </button>
+                        <a href="{% url 'vehiculo:detalle' vehiculo.id %}" class="btn btn-sm btn-accent-modern">
+                            Ver detalles
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="no-results">
+        <i class="fas fa-search"></i>
+        <h3>No se encontraron vehículos</h3>
+        <p>Intenta ajustar tus filtros de búsqueda</p>
+        <a href="{% url 'vehiculo:lista' %}" class="btn btn-accent-modern">
+            Ver todos los vehículos
+        </a>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+    function sortVehicles(sortBy) {
+        const container = document.getElementById('vehicles-container');
+        const vehicles = Array.from(container.children);
+
+        vehicles.sort((a, b) => {
+            switch (sortBy) {
+                case 'precio_asc':
+                    return parseFloat(a.dataset.price) - parseFloat(b.dataset.price);
+                case 'precio_desc':
+                    return parseFloat(b.dataset.price) - parseFloat(a.dataset.price);
+                case 'año':
+                    return parseInt(b.dataset.year) - parseInt(a.dataset.year);
+                case 'kilometraje':
+                    return parseInt(a.dataset.km) - parseInt(b.dataset.km);
+                default:
+                    return 0;
+            }
+        });
+
+        vehicles.forEach(vehicle => container.appendChild(vehicle));
+    }
+
+    function toggleFavorite(vehicleId, button) {
+        // Obtener el token CSRF
+        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+        // Hacer petición AJAX
+        fetch(`/vehiculo/favorito/${vehicleId}/toggle/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': csrftoken,
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const icon = button.querySelector('i');
+
+                    if (data.is_favorite) {
+                        // Agregar a favoritos - corazón lleno
+                        icon.classList.remove('far');
+                        icon.classList.add('fas');
+                        icon.style.color = '#ff3b30';
+                    } else {
+                        // Quitar de favoritos - corazón vacío
+                        icon.classList.remove('fas');
+                        icon.classList.add('far');
+                        icon.style.color = '';
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al actualizar favoritos');
+            });
+    }
+
+    // Auto-submit form cuando cambian los filtros
+    document.querySelectorAll('select[name="marca"], select[name="categoria"]').forEach(select => {
+        select.addEventListener('change', function () {
+            document.getElementById('filter-form').submit();
+        });
+    });
+</script>
+{% endblock %}

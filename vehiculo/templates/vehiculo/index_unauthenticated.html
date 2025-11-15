@@ -1,0 +1,245 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}AutoElite - Plataforma de Gestión Vehicular{% endblock %}
+
+{% block extra_css %}
+<style>
+    .hero-section {
+        position: relative;
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .video-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 1;
+    }
+
+    .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 2;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 3;
+        text-align: center;
+        color: white;
+        max-width: 800px;
+        padding: 0 2rem;
+    }
+
+    .hero-title {
+        font-size: 4rem;
+        font-weight: 200;
+        letter-spacing: 0.1em;
+        margin-bottom: 1rem;
+        font-family: 'Arial', sans-serif;
+    }
+
+    .hero-subtitle {
+        font-size: 1.2rem;
+        font-weight: 300;
+        opacity: 0.9;
+        margin-bottom: 3rem;
+        line-height: 1.6;
+    }
+
+    .features-section {
+        background: #f8f9fa;
+        padding: 5rem 0;
+    }
+
+    .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 3rem;
+        margin-top: 4rem;
+    }
+
+    .feature-card {
+        background: white;
+        padding: 3rem 2rem;
+        border-radius: 8px;
+        text-align: center;
+        border: 1px solid #e9ecef;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #2c2c2c;
+        margin-bottom: 1rem;
+    }
+
+    .feature-description {
+        color: #6c757d;
+        line-height: 1.6;
+    }
+
+    .stats-section {
+        background: #2c2c2c;
+        color: white;
+        padding: 5rem 0;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+    }
+
+    .stat-item {
+        text-align: center;
+    }
+
+    .stat-number {
+        font-size: 3rem;
+        font-weight: 300;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+        opacity: 0.8;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+    }
+
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: 300;
+        text-align: center;
+        margin-bottom: 1rem;
+        color: #2c2c2c;
+    }
+
+    .section-subtitle {
+        text-align: center;
+        color: #6c757d;
+        font-size: 1.1rem;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.5rem;
+        }
+
+        .feature-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section con Video -->
+<section class="hero-section">
+    <video class="video-background" autoplay muted loop>
+        <source src="https://videos.pexels.com/video-files/4632167/4632167-uhd_2560_1440_25fps.mp4" type="video/mp4">
+    </video>
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+        <h1 class="hero-title">AUTOELITE</h1>
+        <p class="hero-subtitle">
+            Plataforma minimalista para la gestión profesional de inventarios vehiculares.
+            Simplicidad, elegancia y funcionalidad en perfecta armonía.
+        </p>
+        <a href="#features" class="btn-minimal">Descubrir</a>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="features-section">
+    <div class="container">
+        <h2 class="section-title">Características</h2>
+        <p class="section-subtitle">
+            Herramientas esenciales diseñadas para maximizar la eficiencia en la gestión vehicular
+        </p>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3 class="feature-title">Gestión Intuitiva</h3>
+                <p class="feature-description">
+                    Sistema de gestión de inventario con interfaz limpia y funcionalidades inteligentes
+                    para el control total de su flota vehicular.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <h3 class="feature-title">Datos Precisos</h3>
+                <p class="feature-description">
+                    Información vehicular detallada con especificaciones técnicas completas
+                    y datos de mercado actualizados constantemente.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <h3 class="feature-title">Análisis Avanzado</h3>
+                <p class="feature-description">
+                    Reportes y análisis de tendencias del mercado automotriz con
+                    métricas precisas para la toma de decisiones informadas.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats-section">
+    <div class="container">
+        <h2 class="section-title" style="color: white;">En Números</h2>
+
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Digital</div>
+            </div>
+
+            <div class="stat-item">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Disponible</div>
+            </div>
+
+            <div class="stat-item">
+                <div class="stat-number">API</div>
+                <div class="stat-label">Integración</div>
+            </div>
+
+            <div class="stat-item">
+                <div class="stat-number">CLOUD</div>
+                <div class="stat-label">Tecnología</div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

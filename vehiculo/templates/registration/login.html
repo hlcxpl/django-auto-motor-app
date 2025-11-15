@@ -1,0 +1,279 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load django_bootstrap5 %}
+
+{% block title %}Acceso - AutoElite{% endblock %}
+
+{% block extra_css %}
+<style>
+    .auth-form {
+        display: none !important;
+    }
+
+    .auth-form.active {
+        display: block !important;
+    }
+
+    #login-form.active {
+        display: block !important;
+    }
+
+    #register-form.active {
+        display: block !important;
+    }
+
+    .auth-navigation {
+        text-align: center;
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid #2c2c2c;
+    }
+
+    .auth-switch a {
+        color: #6c757d;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+    }
+
+    .auth-switch a:hover {
+        color: #1a1a1a;
+        text-decoration: underline;
+    }
+
+    .alert-modern {
+        border-radius: 8px;
+        border: none;
+        font-size: 14px;
+        margin-bottom: 1.5rem;
+    }
+
+    .alert-danger {
+        background-color: #f8d7da;
+        color: #721c24;
+        border-left: 4px solid #dc3545;
+    }
+
+    .text-danger {
+        color: #dc3545 !important;
+    }
+
+    .form-control:invalid {
+        border-color: #dc3545;
+        box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+    }
+
+    .filter-group .form-control {
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid min-vh-100 d-flex align-items-center justify-content-center position-relative">
+    <!-- Fondo de información lateral (solo visible en pantallas grandes) -->
+    <div class="position-absolute start-0 top-0 h-100 w-50 d-none d-lg-block bg-gradient-primary">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="text-center text-white p-5">
+                <div class="mb-4">
+                    <i class="fas fa-car fa-4x mb-3"></i>
+                    <h2 class="display-4 fw-bold">AutoElite</h2>
+                    <p class="lead">Tu plataforma de gestión vehicular</p>
+                </div>
+                <div class="row g-4">
+                    <div class="col-12">
+                        <div class="feature-item">
+                            <i class="fas fa-shield-alt fa-2x mb-2"></i>
+                            <h5>Seguro y Confiable</h5>
+                            <p class="mb-0">Protegemos tu información con los más altos estándares de seguridad</p>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="feature-item">
+                            <i class="fas fa-users fa-2x mb-2"></i>
+                            <h5>Comunidad Activa</h5>
+                            <p class="mb-0">Conecta con otros entusiastas y profesionales del mundo automotriz</p>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="feature-item">
+                            <i class="fas fa-chart-line fa-2x mb-2"></i>
+                            <h5>Gestión Avanzada</h5>
+                            <p class="mb-0">Herramientas profesionales para el control total de tu flota</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Formulario centrado -->
+    <div class="position-relative" style="z-index: 10; max-width: 400px; width: 100%;">
+        <!-- Formulario Unificado -->
+        <div class="form-section">
+            <div class="filters-header">
+                <i class="fas fa-user-circle"></i>
+                Acceso a AutoElite
+            </div>
+            <div class="filters-content">
+                <!-- Formulario de Login -->
+                <div id="login-form" class="auth-form active">
+                    <form method="post" class="form-modern" action="{% url 'login' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="form_type" value="login">
+
+                        <!-- Mostrar errores específicos de login -->
+                        {% if login_form.errors and request.POST.form_type == 'login' %}
+                        <div class="alert alert-danger alert-modern">
+                            {% for field, errors in login_form.errors.items %}
+                            {% for error in errors %}
+                            <div class="mb-1">
+                                <i class="fas fa-exclamation-triangle me-2"></i>{{ error }}
+                            </div>
+                            {% endfor %}
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+
+                        <div class="filter-group mb-3">
+                            <label class="form-label" for="login_username">Nombre de Usuario</label>
+                            <input type="text" name="username" id="login_username" class="form-control"
+                                placeholder="Ingresa tu usuario" value="{{ login_form.data.username|default:'' }}"
+                                required>
+                            {% if login_form.username.errors %}
+                            <div class="text-danger small mt-1">
+                                {% for error in login_form.username.errors %}
+                                <i class="fas fa-exclamation-triangle me-1"></i>{{ error }}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="filter-group mb-3">
+                            <label class="form-label" for="login_password">Contraseña</label>
+                            <input type="password" name="password" id="login_password" class="form-control"
+                                placeholder="Ingresa tu contraseña" required>
+                            {% if login_form.password.errors %}
+                            <div class="text-danger small mt-1">
+                                {% for error in login_form.password.errors %}
+                                <i class="fas fa-exclamation-triangle me-1"></i>{{ error }}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-accent-modern w-100">
+                                <i class="fas fa-sign-in-alt me-2"></i>Iniciar Sesión
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Formulario de Registro -->
+                <div id="register-form" class="auth-form">
+                    <form method="post" class="form-modern" action="{% url 'signup' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="form_type" value="register">
+
+                        <!-- Mostrar errores específicos de registro -->
+                        {% if signup_form.errors and request.POST.form_type == 'register' %}
+                        <div class="alert alert-danger alert-modern">
+                            {% for field, errors in signup_form.errors.items %}
+                            {% for error in errors %}
+                            <div class="mb-1">
+                                <i class="fas fa-exclamation-triangle me-2"></i>{{ error }}
+                            </div>
+                            {% endfor %}
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+
+                        <div class="filter-group mb-3">
+                            <label class="form-label" for="register_username">Nombre de Usuario</label>
+                            <input type="text" name="username" id="register_username" class="form-control"
+                                placeholder="Elige un nombre de usuario" required>
+                        </div>
+
+                        <div class="filter-group mb-3">
+                            <label class="form-label" for="register_email">Email</label>
+                            <input type="email" name="email" id="register_email" class="form-control"
+                                placeholder="tu@email.com" required>
+                        </div>
+
+                        <div class="filter-group mb-3">
+                            <label class="form-label" for="register_password1">Contraseña</label>
+                            <input type="password" name="password1" id="register_password1" class="form-control"
+                                placeholder="Crea una contraseña segura" required>
+                        </div>
+
+                        <div class="filter-group mb-3">
+                            <label class="form-label" for="register_password2">Confirmar Contraseña</label>
+                            <input type="password" name="password2" id="register_password2" class="form-control"
+                                placeholder="Confirma tu contraseña" required>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-success-modern w-100">
+                                <i class="fas fa-user-plus me-2"></i>Crear Cuenta
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Botones de navegación -->
+                <div class="auth-navigation">
+                    <div id="switch-to-register" class="auth-switch">
+                        ¿No tienes cuenta? <a href="#" onclick="switchToRegister(); return false;">Crear
+                            cuenta</a>
+                    </div>
+                    <div id="switch-to-login" class="auth-switch" style="display: none;">
+                        ¿Ya tienes cuenta? <a href="#" onclick="switchToLogin(); return false;">Iniciar
+                            sesión</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+<script>
+    function switchToRegister() {
+        // Remover clase active del login y agregar al register
+        document.getElementById('login-form').classList.remove('active');
+        document.getElementById('register-form').classList.add('active');
+
+        // Cambiar visibilidad de los enlaces
+        document.getElementById('switch-to-register').style.display = 'none';
+        document.getElementById('switch-to-login').style.display = 'block';
+
+        // Cambiar el título del header
+        const header = document.querySelector('.filters-header');
+        header.innerHTML = '<i class="fas fa-user-plus"></i> Crear Cuenta Nueva';
+    }
+
+    function switchToLogin() {
+        // Remover clase active del register y agregar al login
+        document.getElementById('register-form').classList.remove('active');
+        document.getElementById('login-form').classList.add('active');
+
+        // Cambiar visibilidad de los enlaces
+        document.getElementById('switch-to-login').style.display = 'none';
+        document.getElementById('switch-to-register').style.display = 'block';
+
+        // Cambiar el título del header
+        const header = document.querySelector('.filters-header');
+        header.innerHTML = '<i class="fas fa-user-circle"></i> Acceso a AutoElite';
+    }
+
+    // Detectar si hay errores de registro para mostrar esa pestaña
+    document.addEventListener('DOMContentLoaded', function () {
+        {% if register_form.errors and request.POST.form_type == 'register' %}
+        switchToRegister();
+        {% endif %}
+    });
+</script>
+{% endblock %}

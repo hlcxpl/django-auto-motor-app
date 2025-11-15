@@ -1,0 +1,257 @@
+/* AUTOELITE LAYOUTS - Estructuras de página modulares */
+
+/* =============================================================================
+   LAYOUTS - Página de autenticación
+============================================================================= */
+
+.auth-layout {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-lg);
+}
+
+.auth-container {
+    background: white;
+    border-radius: var(--border-radius-xl);
+    box-shadow: var(--shadow-xl);
+    overflow: hidden;
+    width: 100%;
+    max-width: 1000px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 600px;
+}
+
+.auth-form-section {
+    padding: var(--spacing-xxl);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.auth-image-section {
+    background: linear-gradient(135deg, #1a1a1a 0%, #495057 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    padding: var(--spacing-xl);
+}
+
+/* =============================================================================
+   LAYOUTS - Dashboard principal
+============================================================================= */
+
+.dashboard-layout {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    min-height: 100vh;
+}
+
+.dashboard-sidebar {
+    background: #1a1a1a;
+    color: white;
+    padding: var(--spacing-xl);
+    position: fixed;
+    height: 100vh;
+    width: 250px;
+    overflow-y: auto;
+}
+
+.dashboard-content {
+    margin-left: 250px;
+    background: var(--color-gray-50);
+    min-height: 100vh;
+    padding: var(--spacing-xl);
+}
+
+/* =============================================================================
+   LAYOUTS - Lista de vehículos
+============================================================================= */
+
+.vehicles-layout {
+    display: grid;
+    grid-template-areas: 
+        "filters"
+        "results";
+    gap: var(--spacing-xl);
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--spacing-lg);
+}
+
+.vehicles-filters {
+    grid-area: filters;
+}
+
+.vehicles-results {
+    grid-area: results;
+}
+
+.vehicles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--spacing-xl);
+    margin-top: var(--spacing-xl);
+}
+
+/* =============================================================================
+   LAYOUTS - Formularios
+============================================================================= */
+
+.form-layout {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    border-radius: var(--border-radius-xl);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+}
+
+.form-header {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    color: white;
+    padding: var(--spacing-xl);
+    text-align: center;
+}
+
+.form-body {
+    padding: var(--spacing-xxl);
+}
+
+.form-footer {
+    background: var(--color-gray-50);
+    padding: var(--spacing-xl);
+    text-align: center;
+    border-top: 1px solid var(--color-border);
+}
+
+/* =============================================================================
+   LAYOUTS - Página de error
+============================================================================= */
+
+.error-layout {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-gray-50);
+    text-align: center;
+    padding: var(--spacing-lg);
+}
+
+.error-container {
+    max-width: 600px;
+}
+
+/* =============================================================================
+   LAYOUTS - Hero sections
+============================================================================= */
+
+.hero-layout {
+    background: linear-gradient(135deg, #1a1a1a 0%, #495057 100%);
+    color: white;
+    padding: var(--spacing-xxl) 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0.1;
+}
+
+/* =============================================================================
+   LAYOUTS - Estadísticas
+============================================================================= */
+
+.stats-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-xl);
+    margin: var(--spacing-xxl) 0;
+}
+
+.stats-item {
+    text-align: center;
+    background: white;
+    padding: var(--spacing-xl);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-border);
+}
+
+/* =============================================================================
+   LAYOUTS - Responsive
+============================================================================= */
+
+@media (max-width: 768px) {
+    .auth-container {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+    }
+    
+    .auth-image-section {
+        display: none;
+    }
+    
+    .dashboard-layout {
+        grid-template-columns: 1fr;
+    }
+    
+    .dashboard-sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+    }
+    
+    .dashboard-content {
+        margin-left: 0;
+    }
+    
+    .vehicles-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .stats-layout {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-lg);
+    }
+}
+
+@media (max-width: 480px) {
+    .auth-form-section {
+        padding: var(--spacing-lg);
+    }
+    
+    .vehicles-layout {
+        padding: var(--spacing-md);
+        gap: var(--spacing-lg);
+    }
+    
+    .form-body {
+        padding: var(--spacing-lg);
+    }
+    
+    .stats-layout {
+        grid-template-columns: 1fr;
+    }
+}
